@@ -1,11 +1,17 @@
+import React from 'react';
+import {Root} from 'native-base';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import HomeScreen from './src/pages/Home';
+import ListScreen from './src/pages/List';
 
 const AppNavigator = createStackNavigator(
   {
     Home: {
       screen: HomeScreen,
+    },
+    Lista: {
+      screen: ListScreen,
     },
   },
   {

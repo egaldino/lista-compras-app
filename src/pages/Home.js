@@ -12,7 +12,7 @@ import {
   Root,
 } from 'native-base';
 
-import api from '../api/produtoApi';
+import {cadastrarProduto} from '../service/produtos';
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -51,7 +51,12 @@ export default class HomeScreen extends React.Component {
             <Button block bordered primary onPress={() => this.cadastrar()}>
               <Text>Cadastrar</Text>
             </Button>
-            <Button block bordered success style={{marginTop: 20}}>
+            <Button
+              block
+              bordered
+              success
+              style={{marginTop: 20}}
+              onPress={() => this.props.navigation.navigate('Lista')}>
               <Text>Listar</Text>
             </Button>
           </Content>
@@ -61,13 +66,16 @@ export default class HomeScreen extends React.Component {
   }
 
   cadastrar = () => {
-    api
-      .post('/produtos', {
-        nome: this.state.nomeInput,
-        preco: this.state.precoInput,
-        quantidade: 3,
-      })
+    const novoProduto = {
+      nome: this.state.nomeInput,
+      preco: this.state.precoInput,
+      quantidade: 3,
+    };
+
+    cadastrarProduto(novoProduto)
       .then(() => Toast.show({text: 'Cadastrado com sucesso'}))
       .catch(e => Toast.show({text: 'Erro ao cadastrar'}));
+
+    this.setState({nomeInput: '', precoInput: ''});
   };
 }
